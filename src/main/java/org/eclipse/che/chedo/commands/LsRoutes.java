@@ -28,10 +28,10 @@ public class LsRoutes implements Runnable {
     public void run() {
         final String workspaceId = getCurrentWorkspaceId();
         final CheWorkspace workspace = service.getWorkspace(workspaceId, "Bearer " + System.getenv("CHE_MACHINE_TOKEN"));
-        Map<String, CheMachines> machines = workspace.runtime.machines;
-        for( Entry<String, CheMachines> mEntry : machines.entrySet()) {
+        final Map<String, CheMachines> machines = workspace.runtime.machines;
+        for( final Entry<String, CheMachines> mEntry : machines.entrySet()) {
            if ( mEntry.getValue().servers != null ){
-                for (Entry<String, CheServer> server: mEntry.getValue().servers.entrySet()) {
+                for (final Entry<String, CheServer> server: mEntry.getValue().servers.entrySet()) {
                     String display = server.getKey();
                     if(showUrl){
                         display += "\t"+server.getValue().url;

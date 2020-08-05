@@ -36,8 +36,7 @@ public class GetRoute implements Runnable {
                return mEntry.getValue().servers.get(routeName).url;
            }
         }
-        
-        return "bouth";
+        throw new RuntimeException("Couldn't find any route in the workspace that is matching " + routeName);
 	}
     
     private String getCurrentWorkspaceId() {
