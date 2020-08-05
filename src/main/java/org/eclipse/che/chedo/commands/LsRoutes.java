@@ -9,6 +9,7 @@ import org.eclipse.che.chedo.CheWorkspace;
 import org.eclipse.che.chedo.CheWorkspaceService;
 import org.eclipse.che.chedo.model.CheMachines;
 import org.eclipse.che.chedo.model.CheServer;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 import picocli.CommandLine.Command;
@@ -24,10 +25,15 @@ public class LsRoutes implements Runnable {
     @RestClient
     CheWorkspaceService service;
 
+    @ConfigProperty(name = "CHE_WORKSPACE_ID")
+    String workspaceId;
+
+    @ConfigProperty(name = "CHE_MACHINE_TOKEN")
+    String machineToken;
+
     @Override
     public void run() {
-        final String workspaceId = getCurrentWorkspaceId();
-        final CheWorkspace workspace = service.getWorkspace(workspaceId, "Bearer " + System.getenv("CHE_MACHINE_TOKEN"));
+        final CheWorkspace workspace = service.getWorkspace(workspaceId, "Bearer " + machineToken);
         final Map<String, CheMachines> machines = workspace.runtime.machines;
         for( final Entry<String, CheMachines> mEntry : machines.entrySet()) {
            if ( mEntry.getValue().servers != null ){
@@ -41,9 +47,5 @@ public class LsRoutes implements Runnable {
            }
         }                                          
 	}
-    
-    private String getCurrentWorkspaceId() {
-        return System.getenv("CHE_WORKSPACE_ID");
-    }
 
 }

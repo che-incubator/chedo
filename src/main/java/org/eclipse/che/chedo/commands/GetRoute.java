@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import org.eclipse.che.chedo.CheWorkspace;
 import org.eclipse.che.chedo.CheWorkspaceService;
 import org.eclipse.che.chedo.model.CheMachines;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 import picocli.CommandLine;
@@ -21,14 +22,19 @@ public class GetRoute implements Runnable {
     @RestClient
     CheWorkspaceService service;
 
+    @ConfigProperty(name = "CHE_WORKSPACE_ID")
+    String workspaceId;
+
+    @ConfigProperty(name = "CHE_MACHINE_TOKEN")
+    String machineToken;
+
     @Override
     public void run() {
         System.out.println(getRoute(name));
     }
 
    	public String getRoute(final String routeName) {
-        final String workspaceId = getCurrentWorkspaceId();
-        CheWorkspace workspace = service.getWorkspace(workspaceId, "Bearer " + System.getenv("CHE_MACHINE_TOKEN"));
+        CheWorkspace workspace = service.getWorkspace(workspaceId, "Bearer " + machineToken);
 
         Map<String, CheMachines> machines = workspace.runtime.machines;
         for( Entry<String, CheMachines> mEntry : machines.entrySet()) {
@@ -38,9 +44,5 @@ public class GetRoute implements Runnable {
         }
         throw new RuntimeException("Couldn't find any route in the workspace that is matching " + routeName);
 	}
-    
-    private String getCurrentWorkspaceId() {
-        return System.getenv("CHE_WORKSPACE_ID");
-    }
 
 }
