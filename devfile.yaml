@@ -40,6 +40,9 @@ components:
   - id: ms-vscode/vscode-github-pullrequest/latest
     type: chePlugin
 
+  - id: sonarsource/sonarlint-vscode/latest
+    type: chePlugin
+
 commands:
   -
     name: Package
