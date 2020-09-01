@@ -1,5 +1,5 @@
 # chedo - a CLI to be run within a Che workspace to run various useful actions
-[![Contribute](https://che.openshift.io/factory/resources/factory-contribute.svg)](https://che.openshift.io/f?url=https://github.com/sunix/chedo)
+[![Contribute](https://www.eclipse.org/che/factory-contribute.svg)](https://che.openshift.io/f?url=https://github.com/sunix/chedo)
 
 Currently supported:
 ```bash
