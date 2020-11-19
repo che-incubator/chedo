@@ -5,4 +5,5 @@ Currently supported:
 ```bash
 chedo lsRoutes #to display the routes available in the workspace
 chedo getRoute endpointName # to display the url the endpoint named endpointName
+chedo open /projects/chedo/pom.xml # to open a file in che-theia
 ```
